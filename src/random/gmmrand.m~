@@ -1,0 +1,13 @@
+gmm = randgmm(d, k, varagin)
+%RANDGMM generate a random GMM.
+%
+%
+%   See Also:
+
+%   $ Hyunwoo J. Kim $  $ 2015/12/12 13:16:56 (CLT) $
+
+    mu = randn(d, k);
+    FULLCOV
+    if nargin < 3
+        type = 1; % 
+    end
