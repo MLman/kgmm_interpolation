@@ -1,0 +1,298 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>DEMO for Interpolation on the manifold of k-GMMs</title><meta name="generator" content="MATLAB 8.4"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2016-01-02"><meta name="DC.source" content="DEMO_MAIN_ICCV2015_KGMM_INTERPOLATION.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>DEMO for Interpolation on the manifold of k-GMMs</h1><!--introduction--><p>Hyunwoo J. Kim, Nagesh Adluru, Monami Banerjee, Baba C. Vemuri, Vikas Singh, Interpolation on the manifold of k component Gaussian Mixture Models (GMMs), In International Conference on Computer Vision (ICCV), December 2015.</p><p>Project page. <a href="http://pages.cs.wisc.edu/~hwkim/projects/k-gmm/">http://pages.cs.wisc.edu/~hwkim/projects/k-gmm/</a></p><p>Github repository <a href="http://github.com/MLman/kgmm_interpolation">http://github.com/MLman/kgmm_interpolation</a></p><p>Github page <a href="http://mlman.github.io/kgmm_interpolation/">http://mlman.github.io/kgmm_interpolation/</a></p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Generate random gmm distributions.</a></li><li><a href="#2">GMM parameterizations</a></li><li><a href="#3">Distance between GMMs</a></li><li><a href="#4">Gradient descent scheme for <img src="DEMO_MAIN_ICCV2015_KGMM_INTERPOLATION_eq11695167239558615666.png" alt="$l_2$">-distance</a></li><li><a href="#5">EM algorithm for KL-divergence or cross entory.</a></li><li><a href="#6">Modified EM (our restricted GPMM)</a></li></ul></div><h2>Generate random gmm distributions.<a name="1"></a></h2><pre class="codeinput">clear
+rng <span class="string">default</span>
+addpath(genpath(<span class="string">'.'</span>))
+kcomp = 3;
+d = 2;
+gmm1 = randgmm(d, kcomp);
+gmm2 = randgmm(d, kcomp);
+</pre><h2>GMM parameterizations<a name="2"></a></h2><pre class="codeinput"><span class="comment">% L2 normalization can be obtained by</span>
+ngmm1 = l2normalizeGMM(gmm1);
+ngmm2 = l2normalizeGMM(gmm2);
+fprintf(<span class="string">'L2 norm of the normalized GMMs |ngmm1| = %f, |ngmm2| = %f \n'</span>, l2normGMM(ngmm1), l2normGMM(ngmm2));
+
+<span class="comment">% Square-root reparameteraization can be obtained by taking the square root</span>
+<span class="comment">% of the PDF values.</span>
+</pre><pre class="codeoutput">L2 norm of the normalized GMMs |ngmm1| = 1.000000, |ngmm2| = 1.000000 
+</pre><h2>Distance between GMMs<a name="3"></a></h2><pre class="codeinput"><span class="comment">% L2 distance between GMMs</span>
+d_l2 = l2distGMM(gmm1, gmm2);
+
+<span class="comment">% L2 distance between normalized GMMs</span>
+<span class="comment">% d_nl2 = l2distGMM(ngmm1, ngmm2);</span>
+d_nl2 = l2ndistGMM(gmm1,gmm2);
+
+<span class="comment">% Geodesic distance on the unit Hilbert sphere with the l2-normalized GMMs.</span>
+d_ngeo = acos(innerprodGMM(ngmm1, ngmm2));
+
+fprintf(<span class="string">'L2 norm of the normalized GMMs d_l2(gmm1,gmm2) = %f, d_nl2(gmm1, gmm2) = %f, d_ngeo(gmm1,gmm2) = %f \n'</span>, d_l2, d_nl2, d_ngeo);
+</pre><pre class="codeoutput">L2 norm of the normalized GMMs d_l2(gmm1,gmm2) = 0.266805, d_nl2(gmm1, gmm2) = 1.002828, d_ngeo(gmm1,gmm2) = 1.050465 
+</pre><h2>Gradient descent scheme for <img src="DEMO_MAIN_ICCV2015_KGMM_INTERPOLATION_eq11695167239558615666.png" alt="$l_2$">-distance<a name="4"></a></h2><pre class="codeinput">clear
+close <span class="string">all</span>
+gmm1 = obj2structGMM(gmdistribution([-5; 2], ones(1,1,2),[0.7 0.3]));
+gmm2 = obj2structGMM(gmdistribution([-4.9 ;2.1;3.1; 4;5], ones(1,1,5),[0.2 0.4 0.1 0.25 0.05]));
+gmm3 = obj2structGMM(gmdistribution([-5.1 ;2.5;4;], ones(1,1,3),[0.2 0.4 0.4]));
+
+gmms = {gmm1, gmm2, gmm3};
+gmml2mean = l2meanGMMs(gmms);
+
+figure
+myplotgmm1D(gmml2mean,[-10,10],[1,0,1],0.01);
+title(sprintf(<span class="string">'L2 mean of GMMs with k= %d'</span>, length(gmml2mean.PComponents)));
+maxiter = 100;
+k = 3;
+tic
+[kgmm, fval, gnorm, fval_history, status, gmm0] = gd_gmms_closest_fast(gmml2mean, k, maxiter);
+toc
+figure
+myplotgmm1D(gmm0,[-10,10],[1,0,1],0.01);
+title(sprintf(<span class="string">'Random Initialization kGMM with k=%d'</span>,k));
+
+figure
+myplotgmm1D(kgmm,[-10,10],[1,0,1],0.01);
+title(sprintf(<span class="string">'Learned GMM with k=%d'</span>, k));
+</pre><pre class="codeoutput">Elapsed time is 0.709698 seconds.
+</pre><img vspace="5" hspace="5" src="DEMO_MAIN_ICCV2015_KGMM_INTERPOLATION_01.png" alt=""> <img vspace="5" hspace="5" src="DEMO_MAIN_ICCV2015_KGMM_INTERPOLATION_02.png" alt=""> <img vspace="5" hspace="5" src="DEMO_MAIN_ICCV2015_KGMM_INTERPOLATION_03.png" alt=""> <h2>EM algorithm for KL-divergence or cross entory.<a name="5"></a></h2><p>Note that the proposed EM algorithms do not optimize L2 distance. But it returns a good solution w.r.t L2 distance too.</p><pre class="codeinput">option.maxiter = 100;
+[gmmbar_em, stats] = em_gmm_closest_full(gmml2mean, k, option)
+
+figure;
+hold <span class="string">on</span>
+myplotgmm1D(gmmbar_em,[-15 15],  [1,0,1], 0.01);
+title(<span class="string">'EM GMM fitting.'</span>)
+hold <span class="string">off</span>
+</pre><pre class="codeoutput">L2 distance 0.038671, parameter change 1.000000e+04 tol 1.000000e-06 
+L2 distance 0.014213, parameter change 1.299951e+00 tol 1.000000e-06 
+L2 distance 0.019932, parameter change 7.708335e-01 tol 1.000000e-06 
+L2 distance 0.021607, parameter change 3.825369e-01 tol 1.000000e-06 
+L2 distance 0.022044, parameter change 1.806637e-01 tol 1.000000e-06 
+L2 distance 0.022149, parameter change 8.633808e-02 tol 1.000000e-06 
+L2 distance 0.022173, parameter change 4.127482e-02 tol 1.000000e-06 
+L2 distance 0.022178, parameter change 1.970108e-02 tol 1.000000e-06 
+L2 distance 0.022179, parameter change 9.394260e-03 tol 1.000000e-06 
+L2 distance 0.022180, parameter change 4.477298e-03 tol 1.000000e-06 
+L2 distance 0.022180, parameter change 2.133357e-03 tol 1.000000e-06 
+L2 distance 0.022180, parameter change 1.016390e-03 tol 1.000000e-06 
+L2 distance 0.022180, parameter change 4.842092e-04 tol 1.000000e-06 
+L2 distance 0.022180, parameter change 2.306716e-04 tol 1.000000e-06 
+L2 distance 0.022180, parameter change 1.098879e-04 tol 1.000000e-06 
+L2 distance 0.022180, parameter change 5.234834e-05 tol 1.000000e-06 
+L2 distance 0.022180, parameter change 2.493761e-05 tol 1.000000e-06 
+L2 distance 0.022180, parameter change 1.187971e-05 tol 1.000000e-06 
+L2 distance 0.022180, parameter change 5.659225e-06 tol 1.000000e-06 
+L2 distance 0.022180, parameter change 2.695925e-06 tol 1.000000e-06 
+L2 distance 0.022180, parameter change 1.284277e-06 tol 1.000000e-06 
+
+gmmbar_em = 
+
+    NDimensions: 1
+       DistName: 'gaussian mixture distribution'
+    NComponents: 3
+    PComponents: [0.3377 0.3667 0.2956]
+      SharedCov: 0
+          Iters: []
+           RegV: 0
+          NlogL: []
+        CovType: 'diagonal'
+             mu: [3x1 double]
+          Sigma: [1x1x3 double]
+            AIC: []
+            BIC: []
+      Converged: []
+
+
+stats = 
+
+    terminate: 'Converged.'
+         iter: 21
+    l2history: [21x1 double]
+
+</pre><img vspace="5" hspace="5" src="DEMO_MAIN_ICCV2015_KGMM_INTERPOLATION_04.png" alt=""> <h2>Modified EM (our restricted GPMM)<a name="6"></a></h2><p>Note that the proposed EM algorithms do not optimize L2 distance. But it returns a good solution w.r.t L2 distance too.</p><pre class="codeinput">option.getGamma = <span class="string">'getGamma_l2dist'</span>;
+option.debug = true;
+gmmbar_mem = em_rgpmm(gmml2mean, k, option);
+
+figure;
+hold <span class="string">on</span>
+myplotgmm1D(gmmbar_mem,[-15 15],  [1,0,1], 0.01);
+title(<span class="string">'Modified EM GMM fitting.'</span>)
+hold <span class="string">off</span>
+</pre><pre class="codeoutput">L2 distance 0.441743, parameter change 1.000000e+04 tol 1.000000e-06 
+L2 distance 0.249570, parameter change 3.679200e+01 tol 1.000000e-06 
+L2 distance 0.249564, parameter change 2.577988e-01 tol 1.000000e-06 
+L2 distance 0.249375, parameter change 1.466111e+00 tol 1.000000e-06 
+L2 distance 0.238867, parameter change 8.519961e+00 tol 1.000000e-06 
+L2 distance 0.090234, parameter change 2.627916e+01 tol 1.000000e-06 
+L2 distance 0.022180, parameter change 4.177666e+00 tol 1.000000e-06 
+L2 distance 0.022180, parameter change 1.788741e-02 tol 1.000000e-06 
+L2 distance 0.022180, parameter change 3.913876e-06 tol 1.000000e-06 
+</pre><img vspace="5" hspace="5" src="DEMO_MAIN_ICCV2015_KGMM_INTERPOLATION_05.png" alt=""> <p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2014b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% DEMO for Interpolation on the manifold of k-GMMs
+% Hyunwoo J. Kim, Nagesh Adluru, Monami Banerjee, Baba C. Vemuri, Vikas Singh, 
+% Interpolation on the manifold of k component Gaussian Mixture Models (GMMs),
+% In International Conference on Computer Vision (ICCV), December 2015. 
+%
+% Project page.
+% http://pages.cs.wisc.edu/~hwkim/projects/k-gmm/
+%
+% Github repository
+% http://github.com/MLman/kgmm_interpolation
+%
+% Github page
+% http://mlman.github.io/kgmm_interpolation/
+%
+
+%% Generate random gmm distributions.
+
+clear
+rng default
+addpath(genpath('.'))
+kcomp = 3;
+d = 2;
+gmm1 = randgmm(d, kcomp);
+gmm2 = randgmm(d, kcomp);
+
+%% GMM parameterizations
+
+% L2 normalization can be obtained by 
+ngmm1 = l2normalizeGMM(gmm1);
+ngmm2 = l2normalizeGMM(gmm2);
+fprintf('L2 norm of the normalized GMMs |ngmm1| = %f, |ngmm2| = %f \n', l2normGMM(ngmm1), l2normGMM(ngmm2));
+
+% Square-root reparameteraization can be obtained by taking the square root
+% of the PDF values.
+
+%% Distance between GMMs
+
+% L2 distance between GMMs
+d_l2 = l2distGMM(gmm1, gmm2);
+
+% L2 distance between normalized GMMs
+% d_nl2 = l2distGMM(ngmm1, ngmm2);
+d_nl2 = l2ndistGMM(gmm1,gmm2);
+
+% Geodesic distance on the unit Hilbert sphere with the l2-normalized GMMs.
+d_ngeo = acos(innerprodGMM(ngmm1, ngmm2));
+
+fprintf('L2 norm of the normalized GMMs d_l2(gmm1,gmm2) = %f, d_nl2(gmm1, gmm2) = %f, d_ngeo(gmm1,gmm2) = %f \n', d_l2, d_nl2, d_ngeo);
+
+%% Gradient descent scheme for $l_2$-distance
+
+clear
+close all
+gmm1 = obj2structGMM(gmdistribution([-5; 2], ones(1,1,2),[0.7 0.3]));
+gmm2 = obj2structGMM(gmdistribution([-4.9 ;2.1;3.1; 4;5], ones(1,1,5),[0.2 0.4 0.1 0.25 0.05]));
+gmm3 = obj2structGMM(gmdistribution([-5.1 ;2.5;4;], ones(1,1,3),[0.2 0.4 0.4]));
+
+gmms = {gmm1, gmm2, gmm3};
+gmml2mean = l2meanGMMs(gmms);
+
+figure
+myplotgmm1D(gmml2mean,[-10,10],[1,0,1],0.01);
+title(sprintf('L2 mean of GMMs with k= %d', length(gmml2mean.PComponents)));
+maxiter = 100;
+k = 3;
+tic
+[kgmm, fval, gnorm, fval_history, status, gmm0] = gd_gmms_closest_fast(gmml2mean, k, maxiter);
+toc
+figure
+myplotgmm1D(gmm0,[-10,10],[1,0,1],0.01);
+title(sprintf('Random Initialization kGMM with k=%d',k));
+
+figure
+myplotgmm1D(kgmm,[-10,10],[1,0,1],0.01);
+title(sprintf('Learned GMM with k=%d', k));
+
+%% EM algorithm for KL-divergence or cross entory.
+% Note that the proposed EM algorithms do not optimize L2 distance.
+% But it returns a good solution w.r.t L2 distance too.
+
+option.maxiter = 100;
+[gmmbar_em, stats] = em_gmm_closest_full(gmml2mean, k, option)
+
+figure;
+hold on
+myplotgmm1D(gmmbar_em,[-15 15],  [1,0,1], 0.01);
+title('EM GMM fitting.')
+hold off
+
+%% Modified EM (our restricted GPMM)
+% Note that the proposed EM algorithms do not optimize L2 distance.
+% But it returns a good solution w.r.t L2 distance too.
+
+option.getGamma = 'getGamma_l2dist';
+option.debug = true;
+gmmbar_mem = em_rgpmm(gmml2mean, k, option); 
+
+figure;
+hold on
+myplotgmm1D(gmmbar_mem,[-15 15],  [1,0,1], 0.01);
+title('Modified EM GMM fitting.')
+hold off
+##### SOURCE END #####
+--></body></html>
