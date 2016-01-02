@@ -12,7 +12,7 @@
 % Github page:
 % http://mlman.github.io/kgmm_interpolation/
 %
-% The last update by <http://pages.cs.wisc.edu/~hwkim/index.html Hyunwoo J Kim>  2016/01/02 12:59:04 (CST)
+% The last update by <http://pages.cs.wisc.edu/~hwkim/index.html Hyunwoo J Kim>  2016/01/02 13:30:55 (CST)
 
 %% Generate random gmm distributions.
 
@@ -61,7 +61,7 @@ gmml2mean = l2meanGMMs(gmms);
 
 figure
 myplotgmm1D(gmml2mean,[-10,10],[1,0,1],0.01);
-title(sprintf('L2 mean of GMMs with k= %d', length(gmml2mean.PComponents)));
+title(sprintf('L2 mean of GMMs with $$k=%d$$', length(gmml2mean.PComponents)),'interpreter','latex');
 maxiter = 100;
 k = 3;
 tic
@@ -69,11 +69,11 @@ tic
 toc
 figure
 myplotgmm1D(gmm0,[-10,10],[1,0,1],0.01);
-title(sprintf('Random Initialization kGMM with k=%d',k));
+title(sprintf('Random Initialization GMM with $$k=%d$$',k),'interpreter','latex');
 
 figure
 myplotgmm1D(kgmm,[-10,10],[1,0,1],0.01);
-title(sprintf('Learned GMM with k=%d', k));
+title(sprintf('Learned GMM with $$k=%d$$ by $$\\ell_2$$ minimization ', k),'interpreter','latex')
 
 %% EM algorithm for KL-divergence or cross entory.
 % Note that the proposed EM algorithms do not optimize L2 distance.
