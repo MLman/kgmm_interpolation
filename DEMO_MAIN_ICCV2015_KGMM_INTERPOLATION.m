@@ -7,10 +7,10 @@
 % http://pages.cs.wisc.edu/~hwkim/projects/k-gmm/
 %
 % Github repository
-%
+% http://github.com/MLman/kgmm_interpolation
 %
 % Github page
-%
+% http://mlman.github.io/kgmm_interpolation/
 %
 
 %% Generate random gmm distributions.
@@ -68,11 +68,11 @@ tic
 toc
 figure
 myplotgmm1D(gmm0,[-10,10],[1,0,1],0.01);
-title('Random Initialization kGMM');
+title(sprintf('Random Initialization kGMM with k=%d',k));
 
 figure
 myplotgmm1D(kgmm,[-10,10],[1,0,1],0.01);
-title('Learned GMM');
+title(sprintf('Learned GMM with k=%d', k));
 
 %% EM algorithm for KL-divergence or cross entory.
 % Note that the proposed EM algorithms do not optimize L2 distance.
