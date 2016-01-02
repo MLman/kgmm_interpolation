@@ -1,4 +1,4 @@
-%% DEMO for "Interpolation on the manifold of k-GMMs"
+%% DEMO for Interpolation on the manifold of k-GMMs
 % Hyunwoo J. Kim, Nagesh Adluru, Monami Banerjee, Baba C. Vemuri, Vikas Singh, 
 % Interpolation on the manifold of k component Gaussian Mixture Models (GMMs),
 % In International Conference on Computer Vision (ICCV), December 2015. 
@@ -6,13 +6,13 @@
 % Project page:
 % http://pages.cs.wisc.edu/~hwkim/projects/k-gmm/
 %
-% Github repository:
-% http://github.com/MLman/kgmm_interpolation/ 
+% Github repository 
+% http://github.com/MLman/kgmm_interpolation/
 %
-% Github page:
+% Github page 
 % http://mlman.github.io/kgmm_interpolation/
 %
-% The last update by <http://pages.cs.wisc.edu/~hwkim/index.html Hyunwoo J Kim>  2016/01/02 12:59:04 (CST)
+% The last update by Hyunwoo J Kim  2016/01/02 12:59:04 (CST)
 
 %% Generate random gmm distributions.
 

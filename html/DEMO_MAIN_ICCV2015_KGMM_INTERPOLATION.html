@@ -6,7 +6,7 @@
    <!--
 This HTML was auto-generated from MATLAB code.
 To make changes, update the MATLAB code and republish this document.
-      --><title>DEMO for Interpolation on the manifold of k-GMMs</title><meta name="generator" content="MATLAB 8.4"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2016-01-02"><meta name="DC.source" content="DEMO_MAIN_ICCV2015_KGMM_INTERPOLATION.m"><style type="text/css">
+      --><title>DEMO for "Interpolation on the manifold of k-GMMs"</title><meta name="generator" content="MATLAB 8.4"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2016-01-02"><meta name="DC.source" content="DEMO_MAIN_ICCV2015_KGMM_INTERPOLATION.m"><style type="text/css">
 html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
 
 html { min-height:100%; margin-bottom:1px; }
@@ -66,7 +66,7 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 
 
 
-  </style></head><body><div class="content"><h1>DEMO for Interpolation on the manifold of k-GMMs</h1><!--introduction--><p>Hyunwoo J. Kim, Nagesh Adluru, Monami Banerjee, Baba C. Vemuri, Vikas Singh, Interpolation on the manifold of k component Gaussian Mixture Models (GMMs), In International Conference on Computer Vision (ICCV), December 2015.</p><p>Project page. <a href="http://pages.cs.wisc.edu/~hwkim/projects/k-gmm/">http://pages.cs.wisc.edu/~hwkim/projects/k-gmm/</a></p><p>Github repository <a href="http://github.com/MLman/kgmm_interpolation">http://github.com/MLman/kgmm_interpolation</a></p><p>Github page <a href="http://mlman.github.io/kgmm_interpolation/">http://mlman.github.io/kgmm_interpolation/</a></p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Generate random gmm distributions.</a></li><li><a href="#2">GMM parameterizations</a></li><li><a href="#3">Distance between GMMs</a></li><li><a href="#4">Gradient descent scheme for <img src="DEMO_MAIN_ICCV2015_KGMM_INTERPOLATION_eq11695167239558615666.png" alt="$l_2$">-distance</a></li><li><a href="#5">EM algorithm for KL-divergence or cross entory.</a></li><li><a href="#6">Modified EM (our restricted GPMM)</a></li></ul></div><h2>Generate random gmm distributions.<a name="1"></a></h2><pre class="codeinput">clear
+  </style></head><body><div class="content"><h1>DEMO for "Interpolation on the manifold of k-GMMs"</h1><!--introduction--><p>Hyunwoo J. Kim, Nagesh Adluru, Monami Banerjee, Baba C. Vemuri, Vikas Singh, Interpolation on the manifold of k component Gaussian Mixture Models (GMMs), In International Conference on Computer Vision (ICCV), December 2015.</p><p>Project page: <a href="http://pages.cs.wisc.edu/~hwkim/projects/k-gmm/">http://pages.cs.wisc.edu/~hwkim/projects/k-gmm/</a></p><p>Github repository: <a href="http://github.com/MLman/kgmm_interpolation/">http://github.com/MLman/kgmm_interpolation/</a></p><p>Github page: <a href="http://mlman.github.io/kgmm_interpolation/">http://mlman.github.io/kgmm_interpolation/</a></p><p>The last update by <a href="http://pages.cs.wisc.edu/~hwkim/index.html">Hyunwoo J Kim</a>  2016/01/02 12:59:04 (CST)</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Generate random gmm distributions.</a></li><li><a href="#2">GMM parameterizations</a></li><li><a href="#3">Distance between GMMs</a></li><li><a href="#4">Gradient descent scheme for <img src="DEMO_MAIN_ICCV2015_KGMM_INTERPOLATION_eq11695167239558615666.png" alt="$l_2$">-distance</a></li><li><a href="#5">EM algorithm for KL-divergence or cross entory.</a></li><li><a href="#6">Modified EM (our restricted GPMM)</a></li></ul></div><h2>Generate random gmm distributions.<a name="1"></a></h2><pre class="codeinput">clear
 rng <span class="string">default</span>
 addpath(genpath(<span class="string">'.'</span>))
 kcomp = 3;
@@ -117,7 +117,7 @@ title(sprintf(<span class="string">'Random Initialization kGMM with k=%d'</span>
 figure
 myplotgmm1D(kgmm,[-10,10],[1,0,1],0.01);
 title(sprintf(<span class="string">'Learned GMM with k=%d'</span>, k));
-</pre><pre class="codeoutput">Elapsed time is 0.709698 seconds.
+</pre><pre class="codeoutput">Elapsed time is 0.735563 seconds.
 </pre><img vspace="5" hspace="5" src="DEMO_MAIN_ICCV2015_KGMM_INTERPOLATION_01.png" alt=""> <img vspace="5" hspace="5" src="DEMO_MAIN_ICCV2015_KGMM_INTERPOLATION_02.png" alt=""> <img vspace="5" hspace="5" src="DEMO_MAIN_ICCV2015_KGMM_INTERPOLATION_03.png" alt=""> <h2>EM algorithm for KL-divergence or cross entory.<a name="5"></a></h2><p>Note that the proposed EM algorithms do not optimize L2 distance. But it returns a good solution w.r.t L2 distance too.</p><pre class="codeinput">option.maxiter = 100;
 [gmmbar_em, stats] = em_gmm_closest_full(gmml2mean, k, option)
 
@@ -192,20 +192,21 @@ L2 distance 0.022180, parameter change 1.788741e-02 tol 1.000000e-06
 L2 distance 0.022180, parameter change 3.913876e-06 tol 1.000000e-06 
 </pre><img vspace="5" hspace="5" src="DEMO_MAIN_ICCV2015_KGMM_INTERPOLATION_05.png" alt=""> <p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2014b</a><br></p></div><!--
 ##### SOURCE BEGIN #####
-%% DEMO for Interpolation on the manifold of k-GMMs
+%% DEMO for "Interpolation on the manifold of k-GMMs"
 % Hyunwoo J. Kim, Nagesh Adluru, Monami Banerjee, Baba C. Vemuri, Vikas Singh, 
 % Interpolation on the manifold of k component Gaussian Mixture Models (GMMs),
 % In International Conference on Computer Vision (ICCV), December 2015. 
 %
-% Project page.
+% Project page:
 % http://pages.cs.wisc.edu/~hwkim/projects/k-gmm/
 %
-% Github repository
-% http://github.com/MLman/kgmm_interpolation
+% Github repository:
+% http://github.com/MLman/kgmm_interpolation/ 
 %
-% Github page
+% Github page:
 % http://mlman.github.io/kgmm_interpolation/
 %
+% The last update by <http://pages.cs.wisc.edu/~hwkim/index.html Hyunwoo J Kim>  2016/01/02 12:59:04 (CST)
 
 %% Generate random gmm distributions.
 
