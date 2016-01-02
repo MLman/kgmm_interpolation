@@ -3,11 +3,21 @@
 % Interpolation on the manifold of k component Gaussian Mixture Models (GMMs),
 % In International Conference on Computer Vision (ICCV), December 2015. 
 %
+% Project page.
 % http://pages.cs.wisc.edu/~hwkim/projects/k-gmm/
-clear
-addpath(genpath('.'))
+%
+% Github repository
+%
+%
+% Github page
+%
+%
+
 %% Generate random gmm distributions.
-%rng default
+
+clear
+rng default
+addpath(genpath('.'))
 kcomp = 3;
 d = 2;
 gmm1 = randgmm(d, kcomp);
