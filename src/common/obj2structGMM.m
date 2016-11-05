@@ -13,7 +13,7 @@ function myobj = obj2structGMM(obj)
     end
 
     ver = version;
-    if ~strcmp(ver(end-5:end-1),'2014b')
+    if ~strcmp(ver(end-5:end-1),'2014b') && str2num(ver(end-5:end-2)) <= 2014
         ofields = fieldnames(obj);
         myobj = [];
 
